@@ -308,7 +308,7 @@ body {
     color: var(--success);
 }
 
-.badge-online {
+.badge-entrega {
     background-color: rgba(213, 147, 77, 0.2);
     color: var(--primary);
 }
@@ -337,6 +337,16 @@ body {
 .link-action:hover {
     color: var(--primary);
     text-decoration: underline;
+}
+
+.link-danger {
+    color: var(--danger) !important;
+    opacity: 0.7;
+}
+
+.link-danger:hover {
+    color: var(--danger) !important;
+    opacity: 1;
 }
 
 /* ============================================
@@ -392,6 +402,45 @@ body {
 
 .modal-close:hover {
     color: var(--text);
+}
+
+.modal-top-form {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background-color: rgba(255,255,255,0.03);
+}
+
+.modal-top-form .form-row {
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.type-selector {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.type-btn {
+    flex: 1;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.type-btn:first-child {
+    border-right: 1px solid var(--border);
+}
+
+.type-btn.active {
+    background-color: var(--primary);
+    color: #000;
 }
 
 .modal-body {
@@ -528,6 +577,73 @@ body {
 /* ============================================
    LISTA DE PRODUTOS (MODAL)
    ============================================ */
+
+.collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.collapsible-header:hover h2 {
+    color: var(--primary);
+}
+
+.collapse-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.collapse-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.custom-item-form {
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.custom-item-toggle {
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.custom-item-toggle:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.custom-item-fields {
+    background-color: rgba(213, 147, 77, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 12px;
+}
 
 .product-filters {
     display: flex;
@@ -822,6 +938,369 @@ body {
 
 .gap-16 {
     gap: 16px;
+}
+
+/* ============================================
+   PÁGINA DE PRODUTOS — REDESIGN
+   ============================================ */
+
+.page-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 400;
+}
+
+.page-header {
+    align-items: flex-start;
+}
+
+/* barra de busca + filtros */
+.search-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    max-width: 320px;
+    margin-bottom: 0 !important;
+}
+
+.filter-chip-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-chip-tab {
+    padding: 8px 18px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-chip-tab:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-chip-tab.active {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(213, 147, 77, 0.08);
+}
+
+/* avatar com iniciais */
+.product-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+}
+
+.avatar-pratos        { background: #2b1a00; color: #d5934d; }
+.avatar-bebidas       { background: #0f2540; color: #4a9eff; }
+.avatar-sobremesas    { background: #1e0d30; color: #9b5fc0; }
+.avatar-entradas      { background: #0c2318; color: #2ecc71; }
+
+.product-row-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+/* badges de categoria na tabela */
+.cat-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.cat-pratos     { background: rgba(213, 147, 77, 0.15); color: #d5934d; }
+.cat-bebidas    { background: rgba(74, 158, 255, 0.15); color: #4a9eff; }
+.cat-sobremesas { background: rgba(155, 95, 192, 0.15); color: #9b5fc0; }
+.cat-entradas   { background: rgba(46, 204, 113, 0.15); color: #2ecc71; }
+
+/* preço formatado */
+.price-currency {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.price-amount {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* estoque */
+.stock-value {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.stock-unit {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* ============================================
+   PÁGINA DE HISTÓRICO — REDESIGN
+   ============================================ */
+
+/* cards de resumo */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+}
+
+.stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.stat-icon        { color: var(--text-muted); flex-shrink: 0; }
+.stat-icon-orange { color: var(--primary); }
+.stat-icon-green  { color: var(--success); }
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+.stat-value-orange { color: var(--primary); }
+.stat-value-green  { color: var(--success); }
+
+/* barra de filtro do histórico */
+.hist-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.hist-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.hist-search-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.hist-search-input {
+    width: 240px;
+    padding: 10px 12px 10px 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color 0.2s;
+}
+
+.hist-search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.hist-search-input::placeholder { color: var(--text-muted); }
+
+.hist-breakdown {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.hist-breakdown-presencial { color: var(--primary); font-weight: 600; }
+.hist-breakdown-entrega    { color: #4a9eff;         font-weight: 600; }
+
+/* células da tabela de histórico */
+.hist-id {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.hist-data {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 14px;
+}
+
+/* badges de tipo */
+.hist-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.hist-badge-presencial { background: var(--primary); color: #000; }
+.hist-badge-entrega    { background: #2a2a42; color: #8080b0; }
+
+.hist-valor { text-align: right; }
+
+/* rodapé da tabela */
+.hist-footer-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+    border-top: 1px solid var(--border);
+}
+
+#hist-footer td {
+    border-bottom: none;
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+#hist-footer .hist-footer-total {
+    text-align: right;
+}
+
+#hist-footer .price-amount {
+    font-size: 16px;
+}
+
+/* ============================================
+   PÁGINA DE FUNCIONÁRIOS — REDESIGN
+   ============================================ */
+
+.employee-row-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.employee-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+}
+
+.avatar-administrador { background: #3d2200; color: #d5934d; }
+.avatar-gerente       { background: #2d1a3d; color: #9b5fc0; }
+.avatar-garcom        { background: #0c2a22; color: #2ecc71; }
+.avatar-caixa         { background: #0f1e40; color: #4a9eff; }
+.avatar-cozinheiro    { background: #1e2e0c; color: #a0d44a; }
+
+.employee-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.employee-roles {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* badges de nível */
+.nivel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.nivel-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+.nivel-administrador { background: rgba(213, 147, 77, 0.15); color: #d5934d; }
+.nivel-gerente       { background: rgba(155, 95, 192, 0.15); color: #9b5fc0; }
+.nivel-garcom        { background: rgba(46, 204, 113, 0.15); color: #2ecc71; }
+.nivel-caixa         { background: rgba(74, 158, 255, 0.15); color: #4a9eff; }
+.nivel-cozinheiro    { background: rgba(160, 212, 74, 0.15); color: #a0d44a; }
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+/* ============================================
+   MODAL COMPACTO (PRODUTO / FUNCIONÁRIO)
+   ============================================ */
+
+.modal-produto-sm {
+    max-width: 560px;
+    width: 95%;
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-form-body {
+    padding: 24px;
+}
+
+.modal-form-body .form-row {
+    grid-template-columns: 1fr 1fr;
 }
 
 /* ============================================
