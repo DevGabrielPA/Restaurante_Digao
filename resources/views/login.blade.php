@@ -10,9 +10,7 @@
     <div class="login-container">
         <div class="login-box">
             <div class="login-logo">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/>
-                </svg>
+                <img src="/images/logo-digao.jpg" alt="Restaurante do Digão" style="width:100px; height:100px; border-radius:50%; object-fit:cover; margin-bottom:16px;">
                 <h1>Restaurante do Digão</h1>
             </div>
 
@@ -20,8 +18,8 @@
                 <div id="login-error" style="display:none; background:rgba(231,76,60,0.12); border:1px solid var(--danger); border-radius:6px; padding:10px 14px; margin-bottom:16px; color:var(--danger); font-size:13px;"></div>
 
                 <div class="form-group">
-                    <label class="form-label" for="email">E-mail</label>
-                    <input type="email" id="email" class="form-input" placeholder="seu@email.com" onkeydown="if(event.key==='Enter') fazerLogin()">
+                    <label class="form-label" for="email">E-mail ou Nome</label>
+                    <input type="text" id="email" class="form-input" placeholder="seu@email.com ou seu nome" onkeydown="if(event.key==='Enter') fazerLogin()">
                 </div>
 
                 <div class="form-group">
@@ -56,11 +54,12 @@
                 f3: { nome: 'Roberto Costa',  email: 'roberto.costa@restaurante.com',  cargo: 'caixa',         senha: '123456', primeiroLogin: true },
                 f4: { nome: 'Juliana Santos', email: 'juliana.santos@restaurante.com', cargo: 'garcom',        senha: '123456', primeiroLogin: true },
             };
+            // Indexado por e-mail E por nome (ambos em minúsculo)
             const mapa = {};
             Object.values(funcs).forEach(f => {
                 const parts = f.nome.trim().split(' ');
                 const ini = (parts[0][0] + (parts[1] ? parts[1][0] : parts[0][1])).toUpperCase();
-                mapa[f.email.toLowerCase()] = {
+                const dados = {
                     nome:          f.nome,
                     email:         f.email.toLowerCase(),
                     cargo:         cargoLabel[f.cargo] || f.cargo,
@@ -69,36 +68,41 @@
                     senha:         f.senha || '123456',
                     primeiroLogin: f.primeiroLogin !== false,
                 };
+                mapa[f.email.toLowerCase()]  = dados;
+                mapa[f.nome.toLowerCase()]   = dados;
             });
             return mapa;
         }
 
         function fazerLogin() {
-            const email  = document.getElementById('email').value.trim().toLowerCase();
+            const input  = document.getElementById('email').value.trim();
             const senha  = document.getElementById('password').value;
             const erroEl = document.getElementById('login-error');
 
-            if (!email || !senha) {
-                erroEl.textContent = 'Preencha o e-mail e a senha.';
+            erroEl.style.display = 'none';
+
+            if (!input || !senha) {
+                erroEl.textContent = 'Preencha o e-mail (ou nome) e a senha.';
                 erroEl.style.display = '';
                 return;
             }
 
             const usuarios = getUsuarios();
+            const usuario  = usuarios[input.toLowerCase()];
 
-            if (!usuarios[email]) {
-                erroEl.textContent = 'E-mail não encontrado. Verifique e tente novamente.';
+            if (!usuario) {
+                erroEl.textContent = 'Usuário não encontrado. Verifique o e-mail ou nome.';
                 erroEl.style.display = '';
                 return;
             }
 
-            if (senha !== usuarios[email].senha) {
+            if (senha !== usuario.senha) {
                 erroEl.textContent = 'Senha incorreta.';
                 erroEl.style.display = '';
                 return;
             }
 
-            const { nome, cargo, cargoKey, ini, primeiroLogin } = usuarios[email];
+            const { nome, email, cargo, cargoKey, ini, primeiroLogin } = usuario;
             sessionStorage.setItem('usuario', JSON.stringify({ nome, email, cargo, cargoKey, ini, primeiroLogin }));
             window.location.href = '/comandas';
         }
