@@ -1345,3 +1345,49 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #2A2829;
 }
+
+/* ============================================
+   STATUS DA COMANDA
+   ============================================ */
+
+.status-select {
+    width: 100%;
+    padding: 7px 12px;
+    border-radius: 20px;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    text-align: center;
+    outline: none;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+}
+
+.status-em-preparo {
+    background-color: rgba(213, 147, 77, 0.2);
+    color: #D5934D;
+    border: 1px solid rgba(213, 147, 77, 0.4);
+}
+
+.status-em-rota {
+    background-color: rgba(52, 152, 219, 0.2);
+    color: #3498DB;
+    border: 1px solid rgba(52, 152, 219, 0.4);
+}
+
+.status-completa {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ECC71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.card {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}

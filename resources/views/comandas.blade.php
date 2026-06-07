@@ -24,6 +24,10 @@
             <span class="badge badge-presencial">Presencial</span>
         </div>
         <div class="card-value">R$ 185,40</div>
+        <select class="status-select status-em-preparo" onchange="atualizarStatus('c1', this)">
+            <option value="em-preparo">Em Preparo</option>
+            <option value="completa">Completa</option>
+        </select>
         <div class="card-actions">
             <a href="#" class="link-action" onclick="editarComanda('c1'); return false;">Editar</a>
             <a href="#" class="link-action link-danger" onclick="excluirComanda('c1'); return false;">Excluir</a>
@@ -36,6 +40,11 @@
             <span class="badge badge-entrega">Entrega</span>
         </div>
         <div class="card-value">R$ 92,50</div>
+        <select class="status-select status-em-preparo" onchange="atualizarStatus('c2', this)">
+            <option value="em-preparo">Em Preparo</option>
+            <option value="em-rota">Em Rota</option>
+            <option value="completa">Completa</option>
+        </select>
         <div class="card-actions">
             <a href="#" class="link-action" onclick="editarComanda('c2'); return false;">Editar</a>
             <a href="#" class="link-action link-danger" onclick="excluirComanda('c2'); return false;">Excluir</a>
@@ -48,6 +57,10 @@
             <span class="badge badge-presencial">Presencial</span>
         </div>
         <div class="card-value">R$ 234,80</div>
+        <select class="status-select status-em-preparo" onchange="atualizarStatus('c3', this)">
+            <option value="em-preparo">Em Preparo</option>
+            <option value="completa">Completa</option>
+        </select>
         <div class="card-actions">
             <a href="#" class="link-action" onclick="editarComanda('c3'); return false;">Editar</a>
             <a href="#" class="link-action link-danger" onclick="excluirComanda('c3'); return false;">Excluir</a>
@@ -60,6 +73,11 @@
             <span class="badge badge-entrega">Entrega</span>
         </div>
         <div class="card-value">R$ 157,90</div>
+        <select class="status-select status-em-preparo" onchange="atualizarStatus('c4', this)">
+            <option value="em-preparo">Em Preparo</option>
+            <option value="em-rota">Em Rota</option>
+            <option value="completa">Completa</option>
+        </select>
         <div class="card-actions">
             <a href="#" class="link-action" onclick="editarComanda('c4'); return false;">Editar</a>
             <a href="#" class="link-action link-danger" onclick="excluirComanda('c4'); return false;">Excluir</a>
@@ -72,6 +90,10 @@
             <span class="badge badge-presencial">Presencial</span>
         </div>
         <div class="card-value">R$ 68,70</div>
+        <select class="status-select status-em-preparo" onchange="atualizarStatus('c5', this)">
+            <option value="em-preparo">Em Preparo</option>
+            <option value="completa">Completa</option>
+        </select>
         <div class="card-actions">
             <a href="#" class="link-action" onclick="editarComanda('c5'); return false;">Editar</a>
             <a href="#" class="link-action link-danger" onclick="excluirComanda('c5'); return false;">Excluir</a>
@@ -84,6 +106,10 @@
             <span class="badge badge-presencial">Presencial</span>
         </div>
         <div class="card-value">R$ 312,00</div>
+        <select class="status-select status-em-preparo" onchange="atualizarStatus('c6', this)">
+            <option value="em-preparo">Em Preparo</option>
+            <option value="completa">Completa</option>
+        </select>
         <div class="card-actions">
             <a href="#" class="link-action" onclick="editarComanda('c6'); return false;">Editar</a>
             <a href="#" class="link-action link-danger" onclick="excluirComanda('c6'); return false;">Excluir</a>
@@ -96,12 +122,12 @@
 <script>
     // ── store de comandas ───────────────────────────────────────────────
     const comandas = {
-        c1: { titulo: 'Mesa 05',      tipo: 'presencial', identificador: '05',          endereco: '', cart: {} },
-        c2: { titulo: 'Pedido #1247', tipo: 'entrega',     identificador: 'Cliente',      endereco: 'Rua das Flores, 245 - Apto 302', cart: {} },
-        c3: { titulo: 'Mesa 12',      tipo: 'presencial', identificador: '12',          endereco: '', cart: {} },
-        c4: { titulo: 'Pedido #1248', tipo: 'entrega',     identificador: 'Cliente',      endereco: '', cart: {} },
-        c5: { titulo: 'Mesa 03',      tipo: 'presencial', identificador: '03',          endereco: '', cart: {} },
-        c6: { titulo: 'Mesa 08',      tipo: 'presencial', identificador: '08',          endereco: '', cart: {} },
+        c1: { titulo: 'Mesa 05',      tipo: 'presencial', identificador: '05',     endereco: '', cart: {}, status: 'em-preparo' },
+        c2: { titulo: 'Pedido #1247', tipo: 'entrega',    identificador: 'Cliente', endereco: 'Rua das Flores, 245 - Apto 302', cart: {}, status: 'em-preparo' },
+        c3: { titulo: 'Mesa 12',      tipo: 'presencial', identificador: '12',     endereco: '', cart: {}, status: 'em-preparo' },
+        c4: { titulo: 'Pedido #1248', tipo: 'entrega',    identificador: 'Cliente', endereco: '', cart: {}, status: 'em-preparo' },
+        c5: { titulo: 'Mesa 03',      tipo: 'presencial', identificador: '03',     endereco: '', cart: {}, status: 'em-preparo' },
+        c6: { titulo: 'Mesa 08',      tipo: 'presencial', identificador: '08',     endereco: '', cart: {}, status: 'em-preparo' },
     };
 
     let cart       = {};
@@ -109,6 +135,35 @@
     let editingId  = null;       // null = nova comanda | string = editar existente
     let idCounter  = 7;
     let pedidoCounter = 1249;
+
+    // ── persistência de status no localStorage ──────────────────────────
+    const STATUS_KEY = 'rdigao_comandas_status';
+
+    function syncStatusStorage() {
+        const map = {};
+        Object.keys(comandas).forEach(id => { map[id] = comandas[id].status; });
+        localStorage.setItem(STATUS_KEY, JSON.stringify(map));
+    }
+
+    (function restaurarStatus() {
+        const saved = JSON.parse(localStorage.getItem(STATUS_KEY) || '{}');
+        document.querySelectorAll('.cards-grid .card[data-id]').forEach(card => {
+            const id = card.dataset.id;
+            const status = saved[id];
+            if (!status) return;
+            if (status === 'completa' || status === 'excluido') {
+                card.remove();
+                delete comandas[id];
+                return;
+            }
+            comandas[id].status = status;
+            const sel = card.querySelector('.status-select');
+            if (sel) {
+                sel.value = status;
+                sel.className = 'status-select status-' + status;
+            }
+        });
+    })();
 
     // ── tabs ────────────────────────────────────────────────────────────
     function filterTabs(type, element) {
@@ -291,12 +346,29 @@
             card.querySelector('.badge').className         = `badge ${badgeClass}`;
             card.querySelector('.badge').textContent       = badgeLabel;
             card.querySelector('.card-value').textContent  = totalFmt;
+
+            // Rebuild status select if type changed (presencial <-> entrega)
+            const oldSelect = card.querySelector('.status-select');
+            const currentStatus = comandas[editingId].status || 'em-preparo';
+            const statusOptionsEdit = tipoAtual === 'entrega'
+                ? `<option value="em-preparo">Em Preparo</option><option value="em-rota">Em Rota</option><option value="completa">Completa</option>`
+                : `<option value="em-preparo">Em Preparo</option><option value="completa">Completa</option>`;
+            const newSelect = document.createElement('select');
+            newSelect.className = 'status-select status-' + currentStatus;
+            newSelect.setAttribute('onchange', `atualizarStatus('${editingId}', this)`);
+            newSelect.innerHTML = statusOptionsEdit;
+            newSelect.value = currentStatus;
+            oldSelect.replaceWith(newSelect);
         } else {
             // ── modo criação: cria novo card ────────────
             const novoId = 'c' + idCounter++;
             const titulo = tipoAtual === 'presencial' ? `Mesa ${identificador}` : `Pedido #${pedidoCounter++}`;
 
-            comandas[novoId] = { titulo, tipo: tipoAtual, identificador, endereco, cart: JSON.parse(JSON.stringify(cart)) };
+            comandas[novoId] = { titulo, tipo: tipoAtual, identificador, endereco, cart: JSON.parse(JSON.stringify(cart)), status: 'em-preparo' };
+
+            const statusOptions = tipoAtual === 'entrega'
+                ? `<option value="em-preparo">Em Preparo</option><option value="em-rota">Em Rota</option><option value="completa">Completa</option>`
+                : `<option value="em-preparo">Em Preparo</option><option value="completa">Completa</option>`;
 
             const card = document.createElement('div');
             card.className    = 'card';
@@ -308,6 +380,7 @@
                     <span class="badge ${badgeClass}">${badgeLabel}</span>
                 </div>
                 <div class="card-value">${totalFmt}</div>
+                <select class="status-select status-em-preparo" onchange="atualizarStatus('${novoId}', this)">${statusOptions}</select>
                 <div class="card-actions">
                     <a href="#" class="link-action" onclick="editarComanda('${novoId}'); return false;">Editar</a>
                     <a href="#" class="link-action link-danger" onclick="excluirComanda('${novoId}'); return false;">Excluir</a>
@@ -326,11 +399,31 @@
         fecharModal();
     }
 
+    // ── status da comanda ───────────────────────────────────────────────
+    function atualizarStatus(id, selectEl) {
+        const valor = selectEl.value;
+        comandas[id].status = valor;
+        selectEl.className = 'status-select status-' + valor;
+        syncStatusStorage();
+
+        if (valor === 'completa') {
+            const card = document.querySelector(`.card[data-id="${id}"]`);
+            card.style.opacity    = '0';
+            card.style.transform  = 'scale(0.95)';
+            setTimeout(function () {
+                card.remove();
+                delete comandas[id];
+            }, 500);
+        }
+    }
+
     // ── excluir ─────────────────────────────────────────────────────────
     function excluirComanda(id) {
         const c = comandas[id];
         if (!confirm(`Excluir "${c.titulo}"? Esta ação não pode ser desfeita.`)) return;
         document.querySelector(`.card[data-id="${id}"]`).remove();
+        comandas[id] = { status: 'excluido' };
+        syncStatusStorage();
         delete comandas[id];
     }
 </script>
