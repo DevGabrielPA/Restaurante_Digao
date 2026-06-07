@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: restaurante-digao
+    env: docker
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        value: base64:Xlk3kZbX9yxl9dWpBfJ3mgJBzgtjJYYaTaLPtDzdXrY=
