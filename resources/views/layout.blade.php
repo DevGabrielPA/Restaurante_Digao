@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Restaurante</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <img src="{{ asset('images/logo-digao.jpg') }}" alt="Restaurante do Digão" style="width:48px; height:48px; border-radius:50%; object-fit:cover;">
+                    <img src="/images/logo-digao.jpg" alt="Restaurante do Digão" style="width:48px; height:48px; border-radius:50%; object-fit:cover;">
                 </div>
             </div>
 
