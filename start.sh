@@ -1,14 +1,17 @@
 #!/bin/sh
 
-printf "APP_NAME=\"Restaurante Digao\"\n"              > .env
-printf "APP_ENV=%s\n"    "${APP_ENV:-production}"       >> .env
-printf "APP_KEY=%s\n"    "${APP_KEY:-base64:Xlk3kZbX9yxl9dWpBfJ3mgJBzgtjJYYaTaLPtDzdXrY=}" >> .env
-printf "APP_DEBUG=%s\n"  "${APP_DEBUG:-false}"          >> .env
-printf "APP_URL=%s\n"    "${APP_URL:-http://localhost}"  >> .env
-printf "LOG_CHANNEL=stderr\n"                           >> .env
-printf "SESSION_DRIVER=file\n"                          >> .env
-printf "CACHE_STORE=file\n"                             >> .env
-printf "CACHE_DRIVER=file\n"                            >> .env
+# Render fornece RENDER_EXTERNAL_URL automaticamente
+APP_URL_VALUE="${APP_URL:-${RENDER_EXTERNAL_URL:-http://localhost}}"
+
+printf "APP_NAME=\"Restaurante Digao\"\n"     > .env
+printf "APP_ENV=%s\n"   "${APP_ENV:-production}"  >> .env
+printf "APP_KEY=%s\n"   "${APP_KEY:-base64:Xlk3kZbX9yxl9dWpBfJ3mgJBzgtjJYYaTaLPtDzdXrY=}" >> .env
+printf "APP_DEBUG=%s\n" "${APP_DEBUG:-false}"     >> .env
+printf "APP_URL=%s\n"   "$APP_URL_VALUE"           >> .env
+printf "LOG_CHANNEL=stderr\n"                      >> .env
+printf "SESSION_DRIVER=file\n"                     >> .env
+printf "CACHE_STORE=file\n"                        >> .env
+printf "CACHE_DRIVER=file\n"                       >> .env
 
 mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
 chmod -R 775 storage bootstrap/cache
