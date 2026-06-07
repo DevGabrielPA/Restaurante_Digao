@@ -132,6 +132,27 @@ body {
     flex: 1;
 }
 
+.logout-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(231, 76, 60, 0.1);
+}
+
 .user-name {
     font-size: 14px;
     font-weight: 500;

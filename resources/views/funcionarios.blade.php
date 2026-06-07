@@ -187,13 +187,19 @@
     };
     const permsDisponiveis = ['comandas','produtos','funcionarios','historico','relatorios','financeiro'];
 
-    const funcionarios = {
-        f1: { nome: 'Carlos Silva',   email: 'carlos.silva@restaurante.com',   cargo: 'administrador', perms: ['comandas','produtos','funcionarios','historico','relatorios','financeiro'] },
-        f2: { nome: 'Ana Ferreira',   email: 'ana.ferreira@restaurante.com',   cargo: 'garcom',        perms: ['comandas'] },
-        f3: { nome: 'Roberto Costa',  email: 'roberto.costa@restaurante.com',  cargo: 'caixa',         perms: ['historico','financeiro'] },
-        f4: { nome: 'Juliana Santos', email: 'juliana.santos@restaurante.com', cargo: 'garcom',        perms: ['comandas'] },
+    const defaultFuncionarios = {
+        f1: { nome: 'Carlos Silva',   email: 'carlos.silva@restaurante.com',   cargo: 'administrador', perms: ['comandas','produtos','funcionarios','historico','relatorios','financeiro'], senha: '123456', primeiroLogin: true },
+        f2: { nome: 'Ana Ferreira',   email: 'ana.ferreira@restaurante.com',   cargo: 'garcom',        perms: ['comandas'],                                                                senha: '123456', primeiroLogin: true },
+        f3: { nome: 'Roberto Costa',  email: 'roberto.costa@restaurante.com',  cargo: 'caixa',         perms: ['historico','financeiro'],                                                  senha: '123456', primeiroLogin: true },
+        f4: { nome: 'Juliana Santos', email: 'juliana.santos@restaurante.com', cargo: 'garcom',        perms: ['comandas'],                                                                senha: '123456', primeiroLogin: true },
     };
-    let funcCounter = 5;
+    const funcionarios = JSON.parse(localStorage.getItem('rdigao_funcionarios') || 'null') || defaultFuncionarios;
+    let funcCounter = parseInt(localStorage.getItem('rdigao_func_counter') || '5');
+
+    function syncStorage() {
+        localStorage.setItem('rdigao_funcionarios', JSON.stringify(funcionarios));
+        localStorage.setItem('rdigao_func_counter', String(funcCounter));
+    }
 
     function initials(nome) {
         const parts = nome.trim().split(' ');
@@ -255,6 +261,7 @@
         const email = document.getElementById('employee-email').value.trim();
         const cargo = document.getElementById('employee-role').value;
         const perms = permsDisponiveis.filter(p => document.getElementById('perm-' + p).checked);
+        const senha = document.getElementById('employee-password').value;
         const ini   = initials(nome);
         const avCss = avatarCargoCss[cargo] || 'avatar-garcom';
         const nvCss = cargoCss[cargo] || 'nivel-garcom';
@@ -263,7 +270,8 @@
         const isAdmin = cargo === 'administrador';
 
         if (id) {
-            funcionarios[id] = { ...funcionarios[id], nome, email, cargo, perms };
+            const senhaAtual = funcionarios[id].senha || '123456';
+            funcionarios[id] = { ...funcionarios[id], nome, email, cargo, perms, senha: senha || senhaAtual };
             const tr = document.querySelector(`#tabela-funcionarios tr[data-id="${id}"]`);
             tr.cells[0].innerHTML = `
                 <div class="employee-row-name">
@@ -282,7 +290,7 @@
             excluirBtn.title               = isAdmin ? 'Administradores não podem ser excluídos' : '';
         } else {
             const novoId = 'f' + funcCounter++;
-            funcionarios[novoId] = { nome, email, cargo, perms };
+            funcionarios[novoId] = { nome, email, cargo, perms, senha: senha || '123456', primeiroLogin: true };
             const tr = document.createElement('tr');
             tr.dataset.id = novoId;
             tr.innerHTML = `
@@ -307,6 +315,7 @@
             atualizarContador();
         }
 
+        syncStorage();
         fecharModalFunc();
         return false;
     }
@@ -320,6 +329,7 @@
         if (!confirm(`Excluir "${f.nome}"? Esta ação não pode ser desfeita.`)) return;
         document.querySelector(`#tabela-funcionarios tr[data-id="${id}"]`).remove();
         delete funcionarios[id];
+        syncStorage();
         atualizarContador();
     }
 

@@ -33,6 +33,32 @@
             <div class="modal-column">
                 <h3 class="mb-16">Adicionar Produtos</h3>
 
+                <div class="custom-item-form" style="margin-top:0; border-top:none; padding-top:0; margin-bottom:16px;">
+                    <button class="custom-item-toggle" type="button" onclick="toggleCustomForm()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Adicionar item personalizado
+                    </button>
+                    <div class="custom-item-fields" id="custom-item-fields" style="display:none;">
+                        <div class="form-row" style="margin-top:12px;">
+                            <div class="form-group" style="margin-bottom:0; grid-column: span 2;">
+                                <label class="form-label">Nome do Item</label>
+                                <input type="text" id="custom-nome" class="form-input" placeholder="Ex: Prato especial do chef">
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-top:12px;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label">Preço (R$)</label>
+                                <input type="number" id="custom-preco" class="form-input" placeholder="0,00" step="0.01" min="0">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label">Peso / Qtd</label>
+                                <input type="text" id="custom-peso" class="form-input" placeholder="Ex: 300g, 1kg, 2un">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="addCustomItem()">Adicionar ao Pedido</button>
+                    </div>
+                </div>
+
                 <div class="product-filters">
                     <button class="filter-chip active" onclick="filterProdutos('Todos', this)">Todos</button>
                     <button class="filter-chip" onclick="filterProdutos('Entradas', this)">Entradas</button>
@@ -112,33 +138,6 @@
                             <div class="product-price">R$ 16,50</div>
                         </div>
                         <button class="product-add-btn" onclick="addToCart('Torta de Limão', 16.50)">+</button>
-                    </div>
-                </div>
-
-                <div class="custom-item-form">
-                    <button class="custom-item-toggle" type="button" onclick="toggleCustomForm()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        Adicionar item personalizado
-                    </button>
-
-                    <div class="custom-item-fields" id="custom-item-fields" style="display:none;">
-                        <div class="form-row" style="margin-top:12px;">
-                            <div class="form-group" style="margin-bottom:0; grid-column: span 2;">
-                                <label class="form-label">Nome do Item</label>
-                                <input type="text" id="custom-nome" class="form-input" placeholder="Ex: Prato especial do chef">
-                            </div>
-                        </div>
-                        <div class="form-row" style="margin-top:12px;">
-                            <div class="form-group" style="margin-bottom:0;">
-                                <label class="form-label">Preço (R$)</label>
-                                <input type="number" id="custom-preco" class="form-input" placeholder="0,00" step="0.01" min="0">
-                            </div>
-                            <div class="form-group" style="margin-bottom:0;">
-                                <label class="form-label">Peso / Qtd</label>
-                                <input type="text" id="custom-peso" class="form-input" placeholder="Ex: 300g, 1kg, 2un">
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="addCustomItem()">Adicionar ao Pedido</button>
                     </div>
                 </div>
             </div>
