@@ -43,6 +43,13 @@
                     </svg>
                     <span>Histórico</span>
                 </a>
+
+                <a href="{{ url('/configuracoes') }}" data-page="configuracoes" class="nav-link {{ Request::is('configuracoes') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .11-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.007 7.007 0 0 0-1.6-.94l-.36-2.54A.5.5 0 0 0 14.5 3h-5a.5.5 0 0 0-.49.42l-.36 2.54a7.007 7.007 0 0 0-1.6.94l-2.39-.96a.5.5 0 0 0-.61.22L2.72 8.48a.5.5 0 0 0 .11.63l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94L2.83 14.5a.5.5 0 0 0-.11.63l1.92 3.32c.14.24.43.33.67.22l2.39-.96c.5.37 1.04.67 1.6.94l.36 2.54c.05.27.28.44.56.44h5c.28 0 .51-.17.56-.44l.36-2.54c.56-.27 1.1-.57 1.6-.94l2.39.96c.24.1.52.02.67-.22l1.92-3.32a.5.5 0 0 0-.11-.63l-2.03-1.58zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/>
+                    </svg>
+                    <span>Configurações</span>
+                </a>
             </nav>
 
             <div class="sidebar-footer">
@@ -100,12 +107,66 @@
 
     <script>
         const permissoesCargo = {
-            administrador: ['comandas', 'produtos', 'funcionarios', 'historico'],
-            gerente:       ['comandas', 'produtos', 'funcionarios', 'historico'],
-            garcom:        ['comandas'],
-            caixa:         ['comandas', 'produtos', 'historico'],
-            cozinheiro:    ['comandas', 'produtos'],
+            administrador: ['comandas', 'produtos', 'funcionarios', 'historico', 'configuracoes'],
+            gerente:       ['comandas', 'produtos', 'funcionarios', 'historico', 'configuracoes'],
+            garcom:        ['comandas', 'configuracoes'],
+            caixa:         ['comandas', 'produtos', 'historico', 'configuracoes'],
+            cozinheiro:    ['comandas', 'produtos', 'configuracoes'],
         };
+
+        function applyAppSettings(settings = {}) {
+            const current = {
+                theme: localStorage.getItem('rdigao_theme') || 'dark',
+                fontSize: localStorage.getItem('rdigao_fontSize') || 'md',
+                fontFamily: localStorage.getItem('rdigao_fontFamily') || 'sans',
+            };
+
+            const theme = settings.theme || current.theme;
+            const fontSize = settings.fontSize || current.fontSize;
+            const fontFamily = settings.fontFamily || current.fontFamily;
+
+            localStorage.setItem('rdigao_theme', theme);
+            localStorage.setItem('rdigao_fontSize', fontSize);
+            localStorage.setItem('rdigao_fontFamily', fontFamily);
+
+            document.body.classList.remove('theme-dark', 'theme-light', 'font-size-sm', 'font-size-md', 'font-size-lg', 'font-family-sans', 'font-family-serif', 'font-family-mono');
+            document.body.classList.add(`theme-${theme}`, `font-size-${fontSize}`, `font-family-${fontFamily}`);
+        }
+
+        function setAppTheme(theme) {
+            applyAppSettings({ theme });
+        }
+
+        function setAppFontSize(fontSize) {
+            applyAppSettings({ fontSize });
+        }
+
+        function setAppFontFamily(fontFamily) {
+            applyAppSettings({ fontFamily });
+        }
+
+        function getAppSettings() {
+            return {
+                theme: localStorage.getItem('rdigao_theme') || 'dark',
+                fontSize: localStorage.getItem('rdigao_fontSize') || 'md',
+                fontFamily: localStorage.getItem('rdigao_fontFamily') || 'sans',
+            };
+        }
+
+        function markSettingsSelection() {
+            const settings = getAppSettings();
+            document.querySelectorAll('[data-theme]').forEach(el => {
+                el.classList.toggle('active', el.dataset.theme === settings.theme);
+            });
+            document.querySelectorAll('[data-font-size]').forEach(el => {
+                el.classList.toggle('active', el.dataset.fontSize === settings.fontSize);
+            });
+            document.querySelectorAll('[data-font-family]').forEach(el => {
+                el.classList.toggle('active', el.dataset.fontFamily === settings.fontFamily);
+            });
+        }
+
+        applyAppSettings();
 
         (function () {
             const raw = sessionStorage.getItem('usuario');

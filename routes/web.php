@@ -23,3 +23,7 @@ Route::get('/funcionarios', function () {
 Route::get('/historico', function () {
     return view('historico');
 });
+
+Route::get('/configuracoes', function () {
+    return view('configuracoes');
+});
